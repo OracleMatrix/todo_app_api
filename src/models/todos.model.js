@@ -1,0 +1,54 @@
+const { Model, DataTypes } = require("sequelize");
+
+module.exports = (sequelize) => {
+  class TodosModel extends Model {
+    static associate(models) {
+      TodosModel.belongsTo(models.users, {
+        foreignKey: "userId",
+      });
+    }
+  }
+
+  TodosModel.init(
+    {
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [3, 20],
+        },
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          len: [3, 255],
+        },
+      },
+      status: {
+        type: DataTypes.ENUM("pending", "in-progress", "completed"),
+        allowNull: false,
+        defaultValue: "pending",
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "users",
+          key: "id",
+          onDelete: "CASCADE",
+          onUpdate: "CASCADE",
+        },
+      },
+      completedAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+    },
+    {
+      sequelize,
+      modelName: "todos",
+    }
+  );
+  return TodosModel;
+};
