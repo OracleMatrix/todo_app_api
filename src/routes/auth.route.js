@@ -91,13 +91,14 @@ router.post("/register", AuthController.register);
  *           schema:
  *             type: object
  *             required:
- *               - username
+ *               - email
  *               - password
  *             properties:
- *               username:
+ *               email:
  *                 type: string
  *                 minLength: 1
  *                 maxLength: 20
+ *                 format: email
  *               password:
  *                 type: string
  *                 minLength: 6

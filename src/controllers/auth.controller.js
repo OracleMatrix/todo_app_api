@@ -55,7 +55,7 @@ class AuthController {
 
   async login(req, res) {
     const schema = Joi.object({
-      username: Joi.string().min(1).max(20).required(),
+      email: Joi.string().min(1).max(20).required(),
       password: Joi.string().min(6).max(255).required(),
     });
 
@@ -64,10 +64,10 @@ class AuthController {
       return res.status(400).json({ error: error.details[0].message });
     }
 
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     try {
-      const user = await UsersModel.findOne({ where: { username } });
+      const user = await UsersModel.findOne({ where: { email } });
       if (!user) {
         return res.status(401).json({ error: "Invalid credentials" });
       }
