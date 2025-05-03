@@ -28,7 +28,7 @@ class AuthController {
     });
     if (existingUser) {
       return res.status(400).json({
-        error: "Username or email already exists",
+        message: "Username or email already exists",
       });
     }
 
@@ -49,7 +49,7 @@ class AuthController {
         token,
       });
     } catch (err) {
-      return res.status(500).json({ error: `Internal server ${err}` });
+      return res.status(500).json({ message: `Internal server ${err}` });
     }
   }
 
@@ -61,7 +61,7 @@ class AuthController {
 
     const { error } = schema.validate(req.body);
     if (error) {
-      return res.status(400).json({ error: error.details[0].message });
+      return res.status(400).json({ message: error.details[0].message });
     }
 
     const { email, password } = req.body;
@@ -69,12 +69,12 @@ class AuthController {
     try {
       const user = await UsersModel.findOne({ where: { email } });
       if (!user) {
-        return res.status(401).json({ error: "Invalid credentials" });
+        return res.status(401).json({ message: "Invalid credentials" });
       }
 
       const isMatch = await user.comparePassword(password);
       if (!isMatch) {
-        return res.status(401).json({ error: "Invalid credentials" });
+        return res.status(401).json({ message: "Invalid credentials" });
       }
 
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
@@ -87,7 +87,7 @@ class AuthController {
         token,
       });
     } catch (err) {
-      return res.status(500).json({ error: `Internal server ${err}` });
+      return res.status(500).json({ message: `Internal server ${err}` });
     }
   }
 }
