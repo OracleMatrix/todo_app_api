@@ -43,9 +43,6 @@ const todosController = require("../controllers/todos.controller");
  *                 maxLength: 255
  *               status:
  *                 type: string
- *               completedAt:
- *                 type: string
- *                 format: date-time
  *     responses:
  *       201:
  *         description: Todo created successfully
