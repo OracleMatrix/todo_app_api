@@ -9,8 +9,7 @@ class TodosController {
     const schema = Joi.object({
       title: Joi.string().min(3).max(20).required(),
       description: Joi.string().min(3).max(255).required(),
-      status: Joi.string().valid('pending', 'in-progress', 'completed').required(),
-      completedAt: Joi.date(),
+      priority: Joi.string().valid('low', 'medium', 'high').required(),
     });
 
     const { error } = schema.validate(req.body);
@@ -30,14 +29,13 @@ class TodosController {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     try {
-      const { title, description, status, completedAt } = req.body;
+      const { title, description, priority } = req.body;
 
       const createTodo = await TodosModel.create({
         title,
         description,
-        status,
+        priority,
         userId,
-        completedAt,
       }).catch((error) => {
         return res
           .status(400)
@@ -64,11 +62,8 @@ class TodosController {
     const schema = Joi.object({
       title: Joi.string().min(3).max(20).required(),
       description: Joi.string().min(3).max(255).required(),
-      status: Joi.string()
-        .valid("pending", "in-progress", "completed")
-        .required(),
+      priority: Joi.string().valid('low', 'medium', 'high').required(),
       userId: Joi.number().required(),
-      completedAt: Joi.date(),
     });
 
     const { error } = schema.validate(req.body);
@@ -88,7 +83,7 @@ class TodosController {
     if (!todo) return res.status(404).json({ message: "TODO not found" });
 
     try {
-      const { title, description, status, userId, completedAt } = req.body;
+      const { title, description, priority, userId } = req.body;
 
       const userExists = await UserModel.findOne({
         where: { id: userId },

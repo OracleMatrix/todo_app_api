@@ -31,7 +31,7 @@ const todosController = require("../controllers/todos.controller");
  *             required:
  *               - title
  *               - description
- *               - status
+ *               - priority
  *             properties:
  *               title:
  *                 type: string
@@ -41,7 +41,7 @@ const todosController = require("../controllers/todos.controller");
  *                 type: string
  *                 minLength: 3
  *                 maxLength: 255
- *               status:
+ *               priority:
  *                 type: string
  *     responses:
  *       201:
@@ -62,7 +62,7 @@ const todosController = require("../controllers/todos.controller");
  *                       type: string
  *                     description:
  *                       type: string
- *                     status:
+ *                     priority:
  *                       type: string
  *                     userId:
  *                       type: integer
@@ -99,7 +99,7 @@ const todosController = require("../controllers/todos.controller");
  *             required:
  *               - title
  *               - description
- *               - status
+ *               - priority
  *               - userId
  *             properties:
  *               title:
@@ -110,7 +110,7 @@ const todosController = require("../controllers/todos.controller");
  *                 type: string
  *                 minLength: 3
  *                 maxLength: 255
- *               status:
+ *               priority:
  *                 type: string
  *               userId:
  *                 type: integer

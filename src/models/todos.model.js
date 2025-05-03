@@ -27,8 +27,13 @@ module.exports = (sequelize) => {
       },
       status: {
         type: DataTypes.ENUM("pending", "in-progress", "completed"),
-        allowNull: false,
+        allowNull: true,
         defaultValue: "pending",
+      },
+      priority: {
+        type: DataTypes.ENUM("low", "medium", "high"),
+        allowNull: false,
+        defaultValue: 'low'
       },
       userId: {
         type: DataTypes.INTEGER,
