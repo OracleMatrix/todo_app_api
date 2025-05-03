@@ -9,7 +9,7 @@ class TodosController {
     const schema = Joi.object({
       title: Joi.string().min(3).max(20).required(),
       description: Joi.string().min(3).max(255).required(),
-      status: Joi.string().required(),
+      status: Joi.string().valid('pending', 'in-progress', 'completed').required(),
       completedAt: Joi.date(),
     });
 
