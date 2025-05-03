@@ -17,7 +17,9 @@ class UsersController {
       });
       return res.status(200).json(users);
     } catch (error) {
-      return res.status(500).json({ error: `Internal server error: ${error}` });
+      return res
+        .status(500)
+        .json({ message: `Internal server error: ${error}` });
     }
   }
 
@@ -35,27 +37,31 @@ class UsersController {
         ],
       });
       if (!user) {
-        return res.status(404).json({ error: "User not found" });
+        return res.status(404).json({ message: "User not found" });
       }
       return res.status(200).json(user);
     } catch (error) {
-      return res.status(500).json({ error: `Internal server error: ${error}` });
+      return res
+        .status(500)
+        .json({ message: `Internal server error: ${error}` });
     }
   }
   async deleteUser(req, res) {
     const { id } = req.params;
     if (!id) {
-      return res.status(400).json({ error: "User ID is required" });
+      return res.status(400).json({ message: "User ID is required" });
     }
     try {
       const user = await UsersModel.findOne({ where: { id } });
       if (!user) {
-        return res.status(404).json({ error: "User not found" });
+        return res.status(404).json({ message: "User not found" });
       }
       await user.destroy();
       return res.status(200).json({ message: "User deleted successfully" });
     } catch (error) {
-      return res.status(500).json({ error: `Internal server error: ${error}` });
+      return res
+        .status(500)
+        .json({ message: `Internal server error: ${error}` });
     }
   }
 }
