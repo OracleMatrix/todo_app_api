@@ -9,11 +9,12 @@ class TodosController {
     const schema = Joi.object({
       title: Joi.string().min(3).max(20).required(),
       description: Joi.string().min(3).max(255).required(),
-      priority: Joi.string().valid('low', 'medium', 'high').required(),
+      priority: Joi.string().valid("low", "medium", "high").required(),
     });
 
     const { error } = schema.validate(req.body);
-    if (error) return res.status(400).json({ error: error.details[0].message });
+    if (error)
+      return res.status(400).json({ message: error.details[0].message });
 
     const userId = req.params.userId;
     if (!userId)
@@ -62,7 +63,7 @@ class TodosController {
     const schema = Joi.object({
       title: Joi.string().min(3).max(20).required(),
       description: Joi.string().min(3).max(255).required(),
-      priority: Joi.string().valid('low', 'medium', 'high').required(),
+      priority: Joi.string().valid("low", "medium", "high").required(),
       userId: Joi.number().required(),
     });
 
