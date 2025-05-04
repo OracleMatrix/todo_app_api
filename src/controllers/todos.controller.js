@@ -68,7 +68,8 @@ class TodosController {
     });
 
     const { error } = schema.validate(req.body);
-    if (error) return res.status(400).json({ error: error.details[0].message });
+    if (error)
+      return res.status(400).json({ message: error.details[0].message });
 
     const todoId = req.params.todoId;
     if (!todoId)
@@ -134,7 +135,8 @@ class TodosController {
     });
 
     const { error } = schema.validate(req.body);
-    if (error) return res.status(400).json({ error: error.details[0].message });
+    if (error)
+      return res.status(400).json({ message: error.details[0].message });
 
     const todoId = req.params.todoId;
     if (!todoId)
