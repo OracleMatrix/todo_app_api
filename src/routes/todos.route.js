@@ -114,9 +114,6 @@ const todosController = require("../controllers/todos.controller");
  *                 type: string
  *               userId:
  *                 type: integer
- *               completedAt:
- *                 type: string
- *                 format: date-time
  *     responses:
  *       200:
  *         description: Todo updated successfully
