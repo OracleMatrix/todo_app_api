@@ -65,6 +65,55 @@ class UsersController {
         .json({ message: `Internal server error: ${error}` });
     }
   }
+
+  async updateUser(req, res) {
+    const { id } = req.params;
+    const { username, email, password } = req.body;
+    if (!id) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+    try {
+      const user = await UsersModel.findOne({ where: { id } });
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      // Update fields if provided
+      if (username !== undefined) user.username = username;
+      if (email !== undefined) user.email = email;
+      if (password !== undefined) user.password = password;
+      await user.save();
+      // Exclude password in response
+      const { password: _, ...userData } = user.toJSON();
+      return res
+        .status(200)
+        .json({ message: "User updated successfully", user: userData });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: `Internal server error: ${error}` });
+    }
+  }
+
+  async getUserProfile(req, res) {
+    try {
+      const userId = req.params.id;
+      if (!userId)
+        return res.status(400).send({ message: "User ID is required" });
+
+      const userExists = await UsersModel.findOne({
+        where: { id: userId },
+        attributes: { exclude: ["password"] },
+      });
+      if (!userExists)
+        return res.status(404).send({ message: "User not found" });
+
+      res
+        .status(200)
+        .send({ message: "User fetched successfully", user: userExists });
+    } catch (error) {
+      res.status(500).send({ message: "Internal server error", error });
+    }
+  }
 }
 
 module.exports = new UsersController();
