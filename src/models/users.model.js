@@ -47,6 +47,11 @@ module.exports = (sequelize) => {
         beforeCreate: async (user) => {
           user.password = await bcrypt.hash(user.password, 10);
         },
+        beforeUpdate: async (user) => {
+          if (user.password) {
+            user.password = await bcrypt.hash(user.password, 10);
+          }
+        },
       },
     }
   );

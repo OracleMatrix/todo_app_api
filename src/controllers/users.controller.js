@@ -82,8 +82,7 @@ class UsersController {
       if (email !== undefined) user.email = email;
       if (password !== undefined) user.password = password;
       await user.save();
-      // Exclude password in response
-      const { password: _, ...userData } = user.toJSON();
+
       return res
         .status(200)
         .json({ message: "User updated successfully", user: userData });
