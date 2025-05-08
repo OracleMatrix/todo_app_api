@@ -1,6 +1,7 @@
 const db = require("../models");
 const UsersModel = db.users;
 const TodoModel = db.todos;
+const Joi = require("joi");
 
 class UsersController {
   async getAllUsers(req, res) {
@@ -67,29 +68,36 @@ class UsersController {
   }
 
   async updateUser(req, res) {
-    const { id } = req.params;
-    const { username, email, password } = req.body;
-    if (!id) {
-      return res.status(400).json({ message: "User ID is required" });
-    }
     try {
+      const { id } = req.params;
+      const schema = Joi.object({
+        username: Joi.string().min(3).max(20).required(),
+        email: Joi.string().email().required(),
+        password: Joi.string().min(6).max(255).required(),
+      });
+      const { error } = schema.validate(req.body);
+      if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+      }
+      const { username, email, password } = req.body;
+      if (!id) {
+        return res.status(400).json({ message: "User ID is required" });
+      }
+
       const user = await UsersModel.findOne({ where: { id } });
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-      // Update fields if provided
-      if (username !== undefined) user.username = username;
-      if (email !== undefined) user.email = email;
-      if (password !== undefined) user.password = password;
-      await user.save();
+
+      const updatedUser = await UsersModel.update(req.body, {
+        where: { id },
+      });
 
       return res
         .status(200)
-        .json({ message: "User updated successfully", user: userData });
+        .send({ message: "User updated successfully", user: updatedUser });
     } catch (error) {
-      return res
-        .status(500)
-        .json({ message: `Internal server error: ${error}` });
+      return res.status(500).json({ message: `Internal server ${error}` });
     }
   }
 
