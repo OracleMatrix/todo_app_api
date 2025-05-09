@@ -89,15 +89,13 @@ class UsersController {
         return res.status(404).json({ message: "User not found" });
       }
 
-      const updatedUser = await UsersModel.update(req.body, {
-        where: { id },
-      });
+      await user.update({ username, email, password });
 
-      return res
-        .status(200)
-        .send({ message: "User updated successfully", user: updatedUser });
+      return res.status(200).send({ message: "User updated successfully" });
     } catch (error) {
-      return res.status(500).json({ message: `Internal server ${error}` });
+      return res
+        .status(500)
+        .json({ message: `Internal server error: ${error}` });
     }
   }
 

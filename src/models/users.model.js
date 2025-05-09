@@ -48,7 +48,7 @@ module.exports = (sequelize) => {
           user.password = await bcrypt.hash(user.password, 10);
         },
         beforeUpdate: async (user) => {
-          if (user.password) {
+          if (user.changed("password")) {
             user.password = await bcrypt.hash(user.password, 10);
           }
         },
