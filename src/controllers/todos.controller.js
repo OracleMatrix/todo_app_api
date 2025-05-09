@@ -47,6 +47,7 @@ class TodosController {
         where: { id: createTodo.id },
         include: {
           model: UserModel,
+          as: "users",
           attributes: { exclude: ["password"] },
         },
       });

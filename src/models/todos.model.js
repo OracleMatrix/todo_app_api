@@ -5,6 +5,9 @@ module.exports = (sequelize) => {
     static associate(models) {
       TodosModel.belongsTo(models.users, {
         foreignKey: "userId",
+        as: "users",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       });
     }
   }
@@ -33,7 +36,7 @@ module.exports = (sequelize) => {
       priority: {
         type: DataTypes.ENUM("low", "medium", "high"),
         allowNull: false,
-        defaultValue: 'low'
+        defaultValue: "low",
       },
       userId: {
         type: DataTypes.INTEGER,

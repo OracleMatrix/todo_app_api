@@ -58,6 +58,8 @@ class UsersController {
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
+      // Delete all todos associated with the user first to avoid FK constraint error
+      await TodoModel.destroy({ where: { userId: id } });
       await user.destroy();
       return res.status(200).json({ message: "User deleted successfully" });
     } catch (error) {
