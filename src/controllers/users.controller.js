@@ -26,6 +26,7 @@ class UsersController {
 
   async getUserById(req, res) {
     const { id } = req.params;
+    if (!id) return res.status(400).json({ message: "User ID is required" });
     try {
       const user = await UsersModel.findOne({
         where: { id },
