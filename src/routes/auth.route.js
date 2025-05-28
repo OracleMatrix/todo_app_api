@@ -154,4 +154,68 @@ router.post("/register", AuthController.register);
  */
 router.post("/login", AuthController.login);
 
+/**
+ * @swagger
+ * /api/auth/newToken/{userId}:
+ *   get:
+ *     summary: Create a new token for user
+ *     tags: [Auth]
+ *     parameters:
+ *        - in: path
+ *          name: userId
+ *          required: true
+ *          schema:
+ *            type: integer
+ *          description: The user ID
+ *     responses:
+ *       200:
+ *         description: Token refreshed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                     username:
+ *                       type: string
+ *                     email:
+ *                       type: string
+ *                 token:
+ *                   type: string
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ */
+router.get('/newToken/:userId', AuthController.newToken);
+
 module.exports = router;
