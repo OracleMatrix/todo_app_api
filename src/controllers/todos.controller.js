@@ -86,7 +86,7 @@ class TodosController {
     if (!todo) return res.status(404).json({ message: "TODO not found" });
 
     try {
-      const { title, description, priority, userId } = req.body;
+      const { userId } = req.body;
 
       const userExists = await UserModel.findOne({
         where: { id: userId },
