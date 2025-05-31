@@ -32,6 +32,7 @@ const todosController = require("../controllers/todos.controller");
  *               - title
  *               - description
  *               - priority
+ *               - category
  *             properties:
  *               title:
  *                 type: string
@@ -43,6 +44,10 @@ const todosController = require("../controllers/todos.controller");
  *                 maxLength: 255
  *               priority:
  *                 type: string
+ *               category:
+ *                 type: string
+ *                 minLength: 3
+ *                 maxLength: 20
  *     responses:
  *       201:
  *         description: Todo created successfully
@@ -63,6 +68,8 @@ const todosController = require("../controllers/todos.controller");
  *                     description:
  *                       type: string
  *                     priority:
+ *                       type: string
+ *                     category:
  *                       type: string
  *                     userId:
  *                       type: integer
@@ -100,6 +107,7 @@ const todosController = require("../controllers/todos.controller");
  *               - title
  *               - description
  *               - priority
+ *               - category
  *               - userId
  *             properties:
  *               title:
@@ -112,6 +120,10 @@ const todosController = require("../controllers/todos.controller");
  *                 maxLength: 255
  *               priority:
  *                 type: string
+ *               category:
+ *                 type: string
+ *                 minLength: 3
+ *                 maxLength: 20
  *               userId:
  *                 type: integer
  *     responses:
@@ -245,6 +257,10 @@ const todosController = require("../controllers/todos.controller");
  *                   description:
  *                     type: string
  *                   status:
+ *                     type: string
+ *                   priority:
+ *                     type: string
+ *                   category:
  *                     type: string
  *                   userId:
  *                     type: integer
