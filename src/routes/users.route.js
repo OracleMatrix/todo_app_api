@@ -42,6 +42,10 @@ const auth = require("../middlewares/auth");
  *                           type: string
  *                         description:
  *                           type: string
+ *                         priority:
+ *                           type: string
+ *                         category:
+ *                           type: string
  *                         status:
  *                           type: string
  *       500:
@@ -94,6 +98,10 @@ router.get("/", auth, usersController.getAllUsers);
  *                         type: string
  *                       description:
  *                         type: string
+ *                       priority:
+ *                           type: string
+ *                       category:
+ *                           type: string
  *                       status:
  *                         type: string
  *       404:
