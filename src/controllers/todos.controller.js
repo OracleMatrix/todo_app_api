@@ -10,6 +10,7 @@ class TodosController {
       title: Joi.string().min(3).max(20).required(),
       description: Joi.string().min(3).max(255).required(),
       priority: Joi.string().valid("low", "medium", "high").required(),
+      category: Joi.string().min(3).max(20).required(),
     });
 
     const { error } = schema.validate(req.body);
@@ -30,12 +31,13 @@ class TodosController {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     try {
-      const { title, description, priority } = req.body;
+      const { title, description, priority, category } = req.body;
 
       const createTodo = await TodosModel.create({
         title,
         description,
         priority,
+        category,
         userId,
       }).catch((error) => {
         return res
@@ -65,6 +67,7 @@ class TodosController {
       title: Joi.string().min(3).max(20).required(),
       description: Joi.string().min(3).max(255).required(),
       priority: Joi.string().valid("low", "medium", "high").required(),
+      category: Joi.string().min(3).max(20).required(),
       userId: Joi.number().required(),
     });
 
